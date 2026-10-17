@@ -1,0 +1,88 @@
+/* Selecteurs Source et Jeux : composants et menus partages. */
+.tm-source-select-wrap { margin: 14px 0 16px; }
+.tm-source-row { display: flex; align-items: flex-end; gap: 12px; }
+.tm-source-dropdown { position: relative; flex: 1 1 0; min-width: 0; }
+.tm-source-label {
+  display: block;
+  margin-bottom: 7px;
+  color: #b7aeae;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .03em;
+}
+.tm-source-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  min-height: 42px;
+  box-sizing: border-box;
+  padding: 10px 12px;
+  border: 1px solid #514949;
+  border-radius: 10px;
+  background: #211e1e;
+  color: #f5eeee;
+  font: 600 13px "Segoe UI", sans-serif;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color .15s, background .15s;
+}
+.tm-source-toggle:hover:not(:disabled) { border-color: #8b7777; background: #2c2525; }
+.tm-source-toggle[aria-expanded="true"] { border-color: #b87b7b; background: #302525; }
+.tm-source-toggle:focus-visible,
+.tm-source-option:focus-visible { outline: 2px solid #db9999; outline-offset: 2px; }
+.tm-source-toggle:disabled { opacity: .5; cursor: not-allowed; }
+.tm-source-toggle-main { display: inline-flex; align-items: center; gap: 10px; min-width: 0; }
+.tm-source-toggle-text { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.tm-source-caret { width: 14px; height: 14px; color: #ab9b9b; flex-shrink: 0; transition: transform .15s; }
+.tm-source-toggle[aria-expanded="true"] .tm-source-caret { transform: rotate(180deg); }
+.tm-source-menu {
+  position: fixed;
+  box-sizing: border-box;
+  z-index: 2147483000;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 6px;
+  border: 1px solid #645050;
+  border-radius: 12px;
+  background: #221e1e;
+  box-shadow: 0 16px 40px #0009, 0 2px 6px #0006;
+}
+.tm-source-menu[hidden] { display: none !important; }
+.tm-source-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 42px;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 10px;
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  color: #cbbebe;
+  font-family: "Segoe UI", sans-serif;
+  text-align: left;
+  cursor: pointer;
+}
+.tm-source-option + .tm-source-option { margin-top: 3px; }
+.tm-source-option:hover,
+.tm-source-option:focus-visible { background: #383030; color: #fff; }
+.tm-source-option[aria-selected="true"] { background: #3d2b2b; color: #ffe0e0; }
+.tm-source-option-text { font-size: 13px; font-weight: 600; }
+.tm-source-badge { display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.tm-source-logo { display: block; width: 18px; height: 18px; object-fit: contain; }
+.tm-dropdown-option-copy { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.tm-dropdown-description { font-size: 11px; color: #b5a5a5; line-height: 1.4; }
+.tm-dropdown-check { width: 15px; height: 15px; margin-left: auto; flex-shrink: 0; visibility: hidden; color: #e6abab; }
+.tm-source-option[aria-selected="true"] .tm-dropdown-check { visibility: visible; }
+.tm-steam-filter-group { position: relative; flex: 0 0 128px; min-width: 0; }
+@media (max-width: 380px) {
+  .tm-source-row { gap: 8px; }
+  .tm-steam-filter-group { flex-basis: 104px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tm-source-toggle, .tm-source-caret { transition: none; }
+}

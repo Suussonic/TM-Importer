@@ -1,0 +1,88 @@
+{
+  "manifest_version": 3,
+  "name": "TM Importer",
+  "version": "1.0.0",
+  "description": "Importe des dans TierMaker depuis plusieurs sources (Steam, YouTube).",
+  "icons": {
+    "16": "public/tm_importer_16x16.png",
+    "32": "public/tm_importer_32x32.png",
+    "48": "public/tm_importer_48x48.png",
+    "128": "public/tm_importer_128x128.png"
+  },
+  "action": {
+    "default_icon": {
+      "16": "public/tm_importer_16x16.png",
+      "32": "public/tm_importer_32x32.png",
+      "48": "public/tm_importer_48x48.png",
+      "128": "public/tm_importer_128x128.png"
+    }
+  },
+  "permissions": ["storage", "unlimitedStorage", "identity", "scripting"],
+  "host_permissions": [
+    "https://steamcommunity.com/*",
+    "https://api.steampowered.com/*",
+    "https://*.chromiumapp.org/*",
+    "https://cdn.akamai.steamstatic.com/*",
+    "https://cdn.cloudflare.steamstatic.com/*",
+    "https://shared.akamai.steamstatic.com/*",
+    "https://shared.cloudflare.steamstatic.com/*",
+    "https://media.steampowered.com/*",
+    "https://www.youtube.com/*",
+    "https://i.ytimg.com/*",
+    "https://i9.ytimg.com/*",
+    "https://yt3.googleusercontent.com/*",
+    "https://yt3.ggpht.com/*"
+  ],
+  "background": {
+    "service_worker": "background/background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://tiermaker.com/*",
+        "https://*.tiermaker.com/*"
+      ],
+      "js": [
+        "lib/storage.js",
+        "lib/icons.js",
+        "steam/client/steam-client-network.js",
+        "steam/client/steam-client-profile.js",
+        "steam/client/steam-client-games.js",
+        "steam/client/steam-client.js",
+        "youtube/client/youtube-client-network.js",
+        "youtube/client/youtube-client.js",
+        "content/state/content-state.js",
+        "content/modal/content-modal-template-youtube.js",
+        "content/modal/content-modal-template.js",
+        "content/users/content-users-list.js",
+        "content/logs/content-logs.js",
+        "content/logs/content-logs-unverified.js",
+        "content/progress/content-progress.js",
+        "content/reload/content-reload.js",
+        "content/import/content-import.js",
+        "content/search/content-search.js",
+        "content/modal/content-modal-lifecycle.js",
+        "content/events/content-events-actions.js",
+        "content/events/content-events.js",
+        "content/content.js"
+      ],
+      "css": [
+        "content/styles/content-base.css",
+        "content/styles/content-source-picker.css",
+        "content/styles/content-fields-youtube.css",
+        "content/styles/content-search-buttons.css",
+        "content/styles/content-logs-panel.css",
+        "content/styles/content-progress-failed.css",
+        "content/styles/content-users-panel.css",
+        "content/styles/content-steam-auth.css"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["public/*"],
+      "matches": ["https://tiermaker.com/*", "https://*.tiermaker.com/*"]
+    }
+  ]
+}

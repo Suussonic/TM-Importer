@@ -1,0 +1,136 @@
+/**
+ * content/content-base.css
+ * Bouton declencheur, overlay de la modale, conteneur principal et bouton
+ * de fermeture. Prefixe "tm-" (TM Importer) pour eviter toute collision
+ * avec les classes du site TierMaker.
+ */
+
+.tm-import-trigger {
+  display: block;
+  margin: 10px auto 0;
+  padding: 10px 20px;
+  max-width: 300px;
+  width: 100%;
+  font-size: 14px;
+  font-weight: bold;
+  color: #fff;
+  background: #1b2a49;
+  border: 1px solid #3a5795;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.tm-import-trigger:hover {
+  background: #24346b;
+}
+
+.tm-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100000;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.tm-modal {
+  position: relative;
+  width: 100%;
+  max-width: 460px;
+  max-height: 90vh;
+  overflow-y: auto;
+  background: linear-gradient(180deg, #2a2727 0%, #232121 100%);
+  color: #ddd;
+  border: 1px solid #4a4545;
+  border-radius: 12px;
+  padding: 22px;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.tm-modal::-webkit-scrollbar {
+  width: 10px;
+}
+
+.tm-modal::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+}
+
+.tm-modal::-webkit-scrollbar-thumb {
+  background: #5a5252;
+  border-radius: 10px;
+  border: 2px solid rgba(0, 0, 0, 0.1);
+}
+
+.tm-modal::-webkit-scrollbar-thumb:hover {
+  background: #6c6262;
+}
+
+.tm-modal h3 {
+  margin: 0;
+  color: #fff;
+}
+
+.tm-modal-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+
+.tm-modal-title-logo {
+  width: 28px;
+  height: 28px;
+  border-radius: 7px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.tm-modal-subtitle {
+  margin: 4px 0 15px;
+  font-size: 12px;
+  color: #999;
+}
+
+.tm-close {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+  color: #ccc;
+}
+
+.tm-close:hover {
+  color: #fff;
+}
+
+.tm-svg-icon {
+  display: block;
+  width: 1em;
+  height: 1em;
+  fill: currentColor;
+}
+
+.tm-close-icon {
+  width: 18px;
+  height: 18px;
+}
+
+.tm-inline-icon {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+.tm-title-icon-svg {
+  width: 16px;
+  height: 16px;
+}

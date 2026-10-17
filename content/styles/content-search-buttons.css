@@ -1,0 +1,99 @@
+/**
+ * content/content-search-buttons.css
+ * Champ de recherche avec resultats suggeres, boutons generiques et
+ * message de statut de la modale.
+ */
+
+.tm-search-field {
+  position: relative;
+}
+
+.tm-search-results {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  margin-top: 4px;
+  max-height: 220px;
+  overflow-y: auto;
+  background: #1b1a1a;
+  border: 1px solid #555;
+  border-radius: 6px;
+}
+
+.tm-search-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  cursor: pointer;
+  font-size: 13px;
+  color: #ddd;
+}
+
+.tm-search-item:hover {
+  background: #2a2a2a;
+}
+
+.tm-search-item img,
+.tm-search-avatar-placeholder {
+  width: 24px;
+  height: 24px;
+  border-radius: 3px;
+  flex-shrink: 0;
+  background: #333;
+}
+
+.tm-search-empty {
+  padding: 10px;
+  font-size: 13px;
+  color: #999;
+}
+
+.tm-btn {
+  padding: 8px 14px;
+  border-radius: 6px;
+  border: 1px solid #666;
+  background: #242222;
+  color: #fff;
+  cursor: pointer;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.tm-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.tm-message {
+  margin: 10px 0;
+  padding: 8px 10px;
+  border-radius: 6px;
+  background: #1f3a24;
+  color: #b6f2be;
+  font-size: 13px;
+}
+
+.tm-message-error {
+  background: #3a1f1f;
+  color: #f2b6b6;
+}
+
+.tm-view-logs-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  margin-bottom: 10px;
+  background: #2a1414;
+  border-color: #6b2020;
+  color: #ff8080;
+  font-weight: bold;
+}
+
+.tm-view-logs-btn:hover {
+  background: #391b1b;
+}

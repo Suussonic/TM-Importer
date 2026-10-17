@@ -1,0 +1,124 @@
+/**
+ * content/content-steam-auth.css
+ * Carte de connexion Steam (OpenID) et ajustements responsives pour les
+ * cartes de connexion Steam/YouTube sur petit ecran.
+ */
+
+.tm-steam-auth-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 0 0 12px;
+  padding: 14px;
+  border-radius: 12px;
+  border: 1px solid #3f4b3b;
+  background: linear-gradient(180deg, #1f221f 0%, #171917 100%);
+}
+
+.tm-steam-auth-card.is-connected {
+  border-color: #2f5a39;
+  background: linear-gradient(180deg, #1f2a22 0%, #171e18 100%);
+}
+
+.tm-steam-auth-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.tm-steam-auth-logo {
+  width: 20px;
+  height: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tm-steam-auth-logo .tm-source-logo {
+  width: 20px;
+  height: 20px;
+}
+
+.tm-steam-auth-copy {
+  min-width: 0;
+}
+
+.tm-steam-auth-title {
+  display: inline-block;
+  color: #fff;
+  font-size: 14px;
+}
+
+.tm-steam-auth-status {
+  display: block;
+  margin-top: 4px;
+  color: #c2d4c5;
+  font-size: 12px;
+}
+
+.tm-steam-auth-hint {
+  display: block;
+  margin-top: 6px;
+  color: #9eb3a0;
+  font-size: 11px;
+  line-height: 1.45;
+}
+
+.tm-steam-auth-btn {
+  white-space: nowrap;
+  border-color: #5a7a5f;
+  background: #1d241e;
+}
+
+.tm-steam-auth-btn:hover {
+  background: #232d23;
+}
+
+.tm-steam-auth-signin-btn {
+  display: block;
+  width: 100%;
+  margin: 0 auto 12px;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  line-height: 0;
+  text-align: center;
+}
+
+.tm-steam-auth-signin-btn img {
+  display: block;
+  margin: 0 auto;
+  height: 36px;
+  width: auto;
+}
+
+.tm-steam-auth-signin-btn:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.tm-steam-auth-signin-btn:hover:not(:disabled) img {
+  filter: brightness(1.1);
+}
+
+@media (max-width: 560px) {
+  .tm-modal {
+    padding: 20px 16px;
+    max-height: 95vh;
+  }
+
+  .tm-youtube-controls-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .tm-steam-auth-card {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .tm-steam-auth-btn {
+    width: 100%;
+  }
+}

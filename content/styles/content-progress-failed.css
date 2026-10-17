@@ -1,0 +1,104 @@
+/**
+ * content/content-progress-failed.css
+ * Texte discret, barre de progression et panneau des imports en echec
+ * (avec relance individuelle ou globale).
+ */
+
+.tm-muted {
+  color: #999;
+  font-size: 12px;
+}
+
+.tm-progress {
+  margin: 10px 0;
+}
+
+.tm-progress-bar {
+  width: 100%;
+  height: 8px;
+  border-radius: 4px;
+  background: #1b1a1a;
+  overflow: hidden;
+  border: 1px solid #444;
+}
+
+.tm-progress-fill {
+  height: 100%;
+  width: 0;
+  background: #3a5795;
+  transition: width 0.2s ease;
+}
+
+.tm-failed-panel {
+  margin: 12px 0 14px;
+  padding: 14px;
+  border: 1px solid #4e2525;
+  border-radius: 10px;
+  background: linear-gradient(180deg, #241515 0%, #1b1212 100%);
+}
+
+.tm-failed-panel-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.tm-failed-panel-title {
+  color: #ffd7d7;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.tm-failed-panel-subtitle {
+  margin: 4px 0 0;
+  color: #caa7a7;
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.tm-failed-retry-all {
+  border-color: #7a2d2d;
+  background: #2b1616;
+}
+
+.tm-failed-retry-all:hover {
+  background: #3a1d1d;
+}
+
+.tm-failed-games-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.tm-failed-game-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 12px;
+  border: 1px solid #3d2424;
+  border-radius: 8px;
+  background: rgba(10, 10, 10, 0.28);
+}
+
+.tm-failed-game-info {
+  min-width: 0;
+}
+
+.tm-failed-game-name {
+  display: block;
+  margin-bottom: 3px;
+  color: #fff;
+  font-size: 13px;
+}
+
+.tm-failed-game-error {
+  display: block;
+  color: #d2aaaa;
+  font-size: 12px;
+  line-height: 1.4;
+  word-break: break-word;
+}

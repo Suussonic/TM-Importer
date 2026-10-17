@@ -1,0 +1,137 @@
+/**
+ * content/content-users-panel.css
+ * Liste des comptes enregistres (une ligne par compte : avatar, infos,
+ * actions) et panneau d'ajout d'un nouveau compte.
+ */
+
+.tm-users-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 2px 0 10px;
+}
+
+.tm-no-users {
+  margin: 0;
+  text-align: center;
+  padding: 18px 12px;
+  border: 1px dashed #4c4545;
+  border-radius: 10px;
+  background: rgba(22, 21, 21, 0.35);
+}
+
+.tm-user-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 12px;
+  background: #1b1a1a;
+  border: 1px solid #444;
+  border-radius: 6px;
+}
+
+.tm-user-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.tm-user-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 4px;
+  flex-shrink: 0;
+  background: #333;
+  object-fit: cover;
+}
+
+.tm-user-avatar-placeholder {
+  display: block;
+}
+
+.tm-user-name {
+  color: #fff;
+  font-size: 14px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tm-user-meta {
+  font-size: 12px;
+  color: #999;
+}
+
+.tm-user-actions {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.tm-icon-btn {
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  border: 1px solid #666;
+  background: #242222;
+  color: #fff;
+  cursor: pointer;
+}
+
+.tm-btn-icon {
+  width: 15px;
+  height: 15px;
+}
+
+.tm-icon-btn:hover {
+  background: #2f2f2f;
+}
+
+.tm-icon-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.tm-delete-row:hover {
+  background: #6b2020;
+  border-color: #6b2020;
+}
+
+.tm-btn-add-user {
+  display: block !important;
+  align-self: stretch;
+  width: 100% !important;
+  min-width: 0;
+  max-width: none !important;
+  box-sizing: border-box;
+  margin-left: 0;
+  margin-right: 0;
+  padding: 10px 14px;
+  background: transparent;
+  border: 1px dashed #666;
+  border-radius: 10px;
+  color: #ccc;
+}
+
+.tm-btn-add-user:hover {
+  background: #2a2a2a;
+  border-color: #888;
+}
+
+.tm-add-user-panel {
+  margin-top: 12px;
+  padding: 14px;
+  border: 1px solid #3f3a3a;
+  border-radius: 12px;
+  background: linear-gradient(180deg, #201e1e 0%, #191818 100%);
+}
+
+.tm-add-user-panel .tm-field:last-of-type {
+  margin-bottom: 10px;
+}
