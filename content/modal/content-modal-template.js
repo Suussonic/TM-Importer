@@ -58,7 +58,7 @@
           <div class="tm-failed-panel-header">
             <div>
               <div class="tm-failed-panel-title">Imports à relancer</div>
-              <p class="tm-failed-panel-subtitle">Certaines jaquettes n'ont pas pu être récupérées. Vous pouvez relancer chaque jeu individuellement ou tout relancer d'un coup.</p>
+              <p class="tm-failed-panel-subtitle">Certaines images n'ont pas pu être récupérées. Vous pouvez relancer chaque élément individuellement ou tout relancer d'un coup.</p>
             </div>
             <button type="button" id="tm-retry-all-failed-btn" class="tm-icon-btn tm-failed-retry-all" title="Relancer tous les imports échoués">${renderIcon('reload', 'tm-btn-icon', 'Relancer tous les imports échoués')}</button>
           </div>
@@ -187,7 +187,14 @@
 
     addUserToggle.textContent = state.currentSource === 'steam'
       ? '+ Ajouter un nouvel utilisateur'
-      : '+ Ajouter une chaine ou playlist';
+      : state.currentSource === 'letterboxd' ? '+ Ajouter un compte ou réalisateur' : '+ Ajouter une chaine ou playlist';
+
+    if (state.currentSource === 'letterboxd') {
+      const { controlsHtml, searchPanelHtml } = global.TMContent.renderLetterboxdControls();
+      controls.innerHTML = controlsHtml;
+      addUserPanelContent.innerHTML = searchPanelHtml;
+      return;
+    }
 
     if (state.currentSource === 'steam') {
       const { controlsHtml, searchPanelHtml } = renderSteamControls(showSteamExtras);

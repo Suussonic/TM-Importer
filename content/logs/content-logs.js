@@ -176,7 +176,9 @@
         const mainOverlay = document.getElementById(global.TMContent.constants.MODAL_ID);
         if (!mainOverlay) return;
         overlay.remove();
-        await global.TMContent.handleReloadYouTube(mainOverlay, entry.retryReload.profileId, entry.retryReload.username);
+        const reload = entry.retryReload.source === 'letterboxd'
+          ? global.TMContent.handleReloadLetterboxd : global.TMContent.handleReloadYouTube;
+        await reload(mainOverlay, entry.retryReload.profileId, entry.retryReload.username);
         return;
       }
       if (!entry.retryGame) return;

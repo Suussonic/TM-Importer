@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "TM Importer",
-  "version": "1.0.0",
-  "description": "Importe des dans TierMaker depuis plusieurs sources (Steam, YouTube).",
+  "version": "1.1.0",
+  "description": "Importe des images dans TierMaker depuis Steam, YouTube et Letterboxd.",
   "icons": {
     "16": "public/tm_importer_16x16.png",
     "32": "public/tm_importer_32x32.png",
@@ -31,7 +31,10 @@
     "https://i.ytimg.com/*",
     "https://i9.ytimg.com/*",
     "https://yt3.googleusercontent.com/*",
-    "https://yt3.ggpht.com/*"
+    "https://yt3.ggpht.com/*",
+    "https://letterboxd.com/*",
+    "https://a.ltrbxd.com/*",
+    "https://s.ltrbxd.com/*"
   ],
   "background": {
     "service_worker": "background/background.js"
@@ -51,7 +54,13 @@
         "steam/client/steam-client.js",
         "youtube/client/youtube-client-network.js",
         "youtube/client/youtube-client.js",
+        "letterboxd/client/letterboxd-parser.js",
+        "letterboxd/client/letterboxd-filters.js",
+        "letterboxd/client/letterboxd-client.js",
         "content/state/content-state.js",
+        "letterboxd/content/letterboxd-controls.js",
+        "letterboxd/content/letterboxd-actions.js",
+        "letterboxd/content/letterboxd-posters.js",
         "content/modal/content-modal-template-youtube.js",
         "content/modal/content-modal-template.js",
         "content/users/content-users-list.js",
@@ -74,7 +83,8 @@
         "content/styles/content-logs-panel.css",
         "content/styles/content-progress-failed.css",
         "content/styles/content-users-panel.css",
-        "content/styles/content-steam-auth.css"
+        "content/styles/content-steam-auth.css",
+        "letterboxd/styles/letterboxd.css"
       ],
       "run_at": "document_idle"
     }

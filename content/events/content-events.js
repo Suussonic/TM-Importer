@@ -16,9 +16,10 @@
     const { updateYouTubeDateBounds } = global.TMContent;
 
     if (nextSource === state.currentSource) return;
+    await global.TMContent.flushLetterboxdSettings?.();
+    await TMStorage.saveSettings({ currentSource: nextSource });
     state.currentSource = nextSource;
     state.failedImports = [];
-    await TMStorage.saveSettings({ currentSource: state.currentSource });
     await renderSourceUI(overlay);
     hideSearchResults(overlay);
     showFailedGames(overlay, null);
@@ -140,31 +141,41 @@
     const { performSearch } = global.TMContent;
 
     overlay.addEventListener('input', async (evt) => {
-      if (evt.target.id === 'tm-search-input') {
-        performSearch(overlay, evt.target.value.trim());
-      }
-      if (evt.target.id === 'tm-youtube-from-date' || evt.target.id === 'tm-youtube-to-date') {
-        state.youtubeFilters.fromDate = overlay.querySelector('#tm-youtube-from-date').value;
-        state.youtubeFilters.toDate = overlay.querySelector('#tm-youtube-to-date').value;
-        await TMStorage.saveSettings({
-          youtubeFromDate: state.youtubeFilters.fromDate,
-          youtubeToDate: state.youtubeFilters.toDate
-        });
+      try {
+        if (evt.target.id === 'tm-search-input') {
+          performSearch(overlay, evt.target.value.trim());
+        }
+        if (evt.target.id === 'tm-youtube-from-date' || evt.target.id === 'tm-youtube-to-date') {
+          state.youtubeFilters.fromDate = overlay.querySelector('#tm-youtube-from-date').value;
+          state.youtubeFilters.toDate = overlay.querySelector('#tm-youtube-to-date').value;
+          await TMStorage.saveSettings({
+            youtubeFromDate: state.youtubeFilters.fromDate,
+            youtubeToDate: state.youtubeFilters.toDate
+          });
+        }
+      } catch (error) {
+        global.TMContent.showMessage(overlay, error.message || String(error), true);
+        global.TMContent.logError(overlay, 'settings', error.message || String(error));
       }
     });
 
     overlay.addEventListener('change', async (evt) => {
-      if (evt.target.id === 'tm-image-type') {
-        state.imageType = evt.target.value;
-        await TMStorage.saveSettings({ imageType: state.imageType });
-      }
-      if (evt.target.id === 'tm-youtube-include-long' || evt.target.id === 'tm-youtube-include-shorts') {
-        state.youtubeFilters.includeLongVideos = overlay.querySelector('#tm-youtube-include-long').checked;
-        state.youtubeFilters.includeShorts = overlay.querySelector('#tm-youtube-include-shorts').checked;
-        await TMStorage.saveSettings({
-          youtubeIncludeLongVideos: state.youtubeFilters.includeLongVideos,
-          youtubeIncludeShorts: state.youtubeFilters.includeShorts
-        });
+      try {
+        if (evt.target.id === 'tm-image-type') {
+          state.imageType = evt.target.value;
+          await TMStorage.saveSettings({ imageType: state.imageType });
+        }
+        if (evt.target.id === 'tm-youtube-include-long' || evt.target.id === 'tm-youtube-include-shorts') {
+          state.youtubeFilters.includeLongVideos = overlay.querySelector('#tm-youtube-include-long').checked;
+          state.youtubeFilters.includeShorts = overlay.querySelector('#tm-youtube-include-shorts').checked;
+          await TMStorage.saveSettings({
+            youtubeIncludeLongVideos: state.youtubeFilters.includeLongVideos,
+            youtubeIncludeShorts: state.youtubeFilters.includeShorts
+          });
+        }
+      } catch (error) {
+        global.TMContent.showMessage(overlay, error.message || String(error), true);
+        global.TMContent.logError(overlay, 'settings', error.message || String(error));
       }
     });
 
@@ -218,6 +229,7 @@
 
     bindSourceMenuEvents(overlay);
     bindGlobalFormEvents(overlay);
+    global.TMContent.bindLetterboxdEvents(overlay);
     bindAuthButtonEvents(overlay);
     bindUserRowActions(overlay, fileInput);
   }

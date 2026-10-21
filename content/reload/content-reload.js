@@ -110,6 +110,9 @@
   async function handleReload(overlay, profileId, username) {
     const { showMessage, showFailedGames, setButtonsBusy, setProgress, logError, renderUsersList } = global.TMContent;
 
+    if (state.currentSource === 'letterboxd') {
+      return global.TMContent.handleReloadLetterboxd(overlay, profileId, username);
+    }
     if (state.currentSource === 'youtube') {
       return handleReloadYouTube(overlay, profileId, username);
     }

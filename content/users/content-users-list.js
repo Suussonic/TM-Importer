@@ -13,6 +13,10 @@
   /** Construit le libelle de statistiques (ex: "12 jeu(x) a 100%") affiche sous le nom du compte. */
   function buildStatsText(cachedData) {
     if (!cachedData) return 'Jamais recharge';
+    if (state.currentSource === 'letterboxd') {
+      const collection = global.TMLetterboxdFilters.COLLECTIONS[cachedData.collection] || 'Filmographie';
+      return `${cachedData.items.length} film(s) • ${collection}`;
+    }
     if (isGameSource(state.currentSource)) {
       const filterMeta = getSteamGameFilterMeta(cachedData.filterMode);
       const unverifiedSuffix = cachedData.failedCount ? ` (${cachedData.failedCount} non verifie(s), rechargez)` : '';
@@ -27,6 +31,9 @@
       return `${statsText} • Maj : ${dateText}`;
     }
     const playlistSubtitle = user.type === 'playlist' && user.subtitle ? ` • ${escapeHtml(user.subtitle)}` : '';
+    if (state.currentSource === 'letterboxd') {
+      return `${user.type === 'director' ? 'Réalisateur' : 'Compte'} • ${statsText} • Maj : ${dateText}`;
+    }
     return `${statsText}${playlistSubtitle} • Maj : ${dateText}`;
   }
 
@@ -37,14 +44,14 @@
     const name = escapeHtml(user.personaname || user.title || profileId);
     const subLabel = buildSubLabel(user, cachedData, statsText, dateText);
     const avatar = user.avatar
-      ? `<img src="${escapeHtml(user.avatar)}" alt="" class="tm-user-avatar">`
+      ? `<img src="${escapeHtml(user.avatar)}" alt="" class="tm-user-avatar" referrerpolicy="no-referrer">`
       : '<span class="tm-user-avatar tm-user-avatar-placeholder"></span>';
 
     const hasImportableData = hasData && (isGameSource(state.currentSource) ? cachedData.completed.length > 0 : cachedData.items && cachedData.items.length > 0);
     const hasUnverifiedGames = isGameSource(state.currentSource) && hasData && cachedData.failed && cachedData.failed.length > 0;
 
     return `
-      <div class="tm-user-row" data-profile-id="${profileId}">
+      <div class="tm-user-row" data-profile-id="${escapeHtml(profileId)}">
         ${avatar}
         <div class="tm-user-info">
           <strong class="tm-user-name">${name}</strong>
@@ -67,7 +74,7 @@
     const listEl = overlay.querySelector('#tm-users-list');
     const users = state.currentSource === 'steam'
       ? await TMStorage.getUsers()
-      : await TMStorage.getYouTubeUsers();
+      : state.currentSource === 'letterboxd' ? await TMStorage.getLetterboxdProfiles() : await TMStorage.getYouTubeUsers();
     const entries = Object.entries(users);
 
     if (entries.length === 0) {
@@ -81,7 +88,8 @@
       entries.map(async ([profileId, user]) => {
         const cachedData = state.currentSource === 'steam'
           ? await TMStorage.getGamesForUser(profileId)
-          : await TMStorage.getYouTubeItemsForUser(profileId);
+          : state.currentSource === 'letterboxd'
+            ? await TMStorage.getLetterboxdCatalog(profileId) : await TMStorage.getYouTubeItemsForUser(profileId);
         return renderUserRow(profileId, user, cachedData);
       })
     );

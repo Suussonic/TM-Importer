@@ -34,6 +34,8 @@
       includeLongVideos: settings.youtubeIncludeLongVideos !== false,
       includeShorts: settings.youtubeIncludeShorts !== false
     };
+    state.letterboxdFilters = { ...global.TMLetterboxdFilters.DEFAULTS, ...settings.letterboxdFilters };
+    state.letterboxdKind = settings.letterboxdKind === 'director' ? 'director' : 'member';
     state.logs = [];
     state.nextLogId = 1;
     state.failedImports = [];

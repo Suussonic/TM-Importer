@@ -21,10 +21,12 @@ importScripts(
   '../youtube/background/youtube-background-images.js',
   '../youtube/background/youtube-background.js'
 );
+importScripts('../letterboxd/background/letterboxd-background.js');
 
 const handlers = {
   ...self.TMSteamBackground.handlers,
-  ...self.TMYouTubeBackground.handlers
+  ...self.TMYouTubeBackground.handlers,
+  ...self.TMLetterboxdBackground.handlers
 };
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {

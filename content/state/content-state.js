@@ -18,7 +18,8 @@
 
     SOURCES: {
       steam: { id: 'steam', label: 'Steam', logoUrl: 'https://store.steampowered.com/favicon.ico' },
-      youtube: { id: 'youtube', label: 'YouTube', logoUrl: 'https://www.youtube.com/favicon.ico' }
+      youtube: { id: 'youtube', label: 'YouTube', logoUrl: 'https://www.youtube.com/favicon.ico' },
+      letterboxd: { id: 'letterboxd', label: 'Letterboxd', logoUrl: 'https://letterboxd.com/favicon.ico' }
     },
 
     // Filtre du type de jeu Steam a recuperer : succes 100%, bibliotheque
@@ -41,6 +42,8 @@
     steamGameFilter: '100',
     steamAuth: { connected: false, steamId: '', personaname: '', avatar: '' },
     youtubeFilters: { fromDate: '', toDate: '', includeLongVideos: true, includeShorts: true },
+    letterboxdFilters: {},
+    letterboxdKind: 'member',
     logs: [],
     nextLogId: 1,
     failedImports: [],

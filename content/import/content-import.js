@@ -14,6 +14,16 @@
   async function getImageBlob(item, imageType, source) {
     const effectiveSource = source || state.currentSource;
 
+    if (effectiveSource === 'letterboxd') {
+      let dataUrl = await TMStorage.getSourceImage('letterboxd', item.id, 'poster-hd');
+      if (!dataUrl) {
+        dataUrl = await TMLetterboxdClient.fetchPoster(item);
+        await TMStorage.saveSourceImage('letterboxd', item.id, 'poster-hd', dataUrl);
+      }
+      global.TMContent.registerLetterboxdPoster(dataUrl);
+      return (await fetch(dataUrl)).blob();
+    }
+
     if (effectiveSource === 'youtube') {
       const videoId = item.videoId || item.id;
       let dataUrl = await TMStorage.getSourceImage('youtube', videoId, 'thumbnail');
@@ -75,7 +85,9 @@
     }
 
     if (importedCount === 0) {
-      throw new Error("Aucune image n'a pu être récupérée.");
+      const error = new Error("Aucune image n'a pu être récupérée.");
+      error.failedItems = failedItems;
+      throw error;
     }
 
     fileInput.files = dataTransfer.files;
@@ -145,6 +157,9 @@
   async function handleImport(overlay, fileInput, profileId, username) {
     const { showMessage, showFailedGames, setButtonsBusy, setProgress, logError } = global.TMContent;
 
+    if (state.currentSource === 'letterboxd') {
+      return global.TMContent.handleImportLetterboxd(overlay, fileInput, profileId, username);
+    }
     if (state.currentSource === 'youtube') {
       return handleImportYouTube(overlay, fileInput, profileId, username);
     }
@@ -244,5 +259,5 @@
     }
   }
 
-  Object.assign(global.TMContent, { handleImport, retryImportFailures });
+  Object.assign(global.TMContent, { handleImport, retryImportFailures, importItemsAsImages });
 })(typeof window !== 'undefined' ? window : this);

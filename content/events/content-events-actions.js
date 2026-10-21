@@ -72,12 +72,19 @@
       } else if (evt.target.closest('.tm-unverified-row')) {
         await openUnverifiedGamesModal(overlay, profileId, username);
       } else if (evt.target.closest('.tm-delete-row')) {
-        if (state.currentSource === 'youtube') {
-          await TMStorage.removeYouTubeUser(profileId);
-        } else {
-          await TMStorage.removeUser(profileId);
+        try {
+          if (state.currentSource === 'letterboxd') {
+            await TMStorage.removeLetterboxdProfile(profileId);
+          } else if (state.currentSource === 'youtube') {
+            await TMStorage.removeYouTubeUser(profileId);
+          } else {
+            await TMStorage.removeUser(profileId);
+          }
+          await renderUsersList(overlay);
+        } catch (error) {
+          global.TMContent.showMessage(overlay, error.message, true);
+          global.TMContent.logError(overlay, 'delete-user', error.message);
         }
-        await renderUsersList(overlay);
       }
     });
   }

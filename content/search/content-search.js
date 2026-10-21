@@ -18,7 +18,8 @@
     if (!items || items.length === 0) {
       const emptyMessage = state.currentSource === 'steam'
         ? 'Aucun resultat. Essayez avec le SteamID64 exact.'
-        : 'Aucune chaine trouvee. Essayez un nom plus precis ou collez une URL YouTube.';
+        : state.currentSource === 'letterboxd' ? 'Aucun profil Letterboxd trouvé. Utilisez son URL publique exacte.'
+          : 'Aucune chaine trouvee. Essayez un nom plus precis ou collez une URL YouTube.';
       container.innerHTML = `<div class="tm-search-empty">${emptyMessage}</div>`;
       container.style.display = 'block';
       return;
@@ -28,7 +29,7 @@
       const row = document.createElement('div');
       row.className = 'tm-search-item';
       row.innerHTML = `
-        ${item.avatar ? `<img src="${escapeHtml(item.avatar)}" alt="">` : '<span class="tm-search-avatar-placeholder"></span>'}
+        ${item.avatar ? `<img src="${escapeHtml(item.avatar)}" alt="" referrerpolicy="no-referrer">` : '<span class="tm-search-avatar-placeholder"></span>'}
         <span>${escapeHtml(item.name)}</span>
       `;
       row.addEventListener('click', () => onPick(item));
@@ -42,10 +43,21 @@
     const { showMessage, setButtonsBusy, hideSearchResults } = global.TMContent;
     const { logError, renderUsersList } = global.TMContent;
 
-    showMessage(overlay, source === 'steam' ? 'Verification du profil...' : 'Verification de la source YouTube...', false);
+    showMessage(overlay, 'Vérification de la source...', false);
     setButtonsBusy(overlay, true);
 
     try {
+      if (source === 'letterboxd') {
+        const profile = await TMLetterboxdClient.resolveInput(inputValue, state.letterboxdKind);
+        await TMStorage.saveLetterboxdProfile(profile.id, profile);
+        setButtonsBusy(overlay, false);
+        hideSearchResults(overlay);
+        overlay.querySelector('#tm-search-input').value = '';
+        overlay.querySelector('#tm-add-user-panel').style.display = 'none';
+        showMessage(overlay, `Source Letterboxd "${profile.title}" enregistrée. Cliquez sur Recharger.`, false);
+        await renderUsersList(overlay);
+        return;
+      }
       if (source === 'youtube') {
         const profile = await TMYouTubeClient.resolveInput(inputValue);
         await TMStorage.saveYouTubeUser(profile.id, profile);
@@ -136,6 +148,20 @@
   const debouncedSearch = debounce(async (overlay, query, source, version) => {
     const isCurrent = () => version === searchVersion && state.currentSource === source && overlay.isConnected;
     if (!isCurrent()) return;
+    if (source === 'letterboxd') {
+      try {
+        const profile = await TMLetterboxdClient.resolveInput(query, state.letterboxdKind);
+        if (!isCurrent()) return;
+        renderSearchResults(overlay, [{ ...profile, name: profile.title }], (item) =>
+          addUserAndRefreshList(overlay, item.canonicalUrl, 'letterboxd'));
+      } catch (error) {
+        if (!isCurrent()) return;
+        global.TMContent.hideSearchResults(overlay);
+        global.TMContent.showMessage(overlay, error.message, true);
+        global.TMContent.logError(overlay, 'search', error.message);
+      }
+      return;
+    }
     if (source === 'youtube') {
       global.TMContent.showMessage(overlay, '', false);
       const container = overlay.querySelector('#tm-search-results');

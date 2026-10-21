@@ -7,8 +7,8 @@
  * content-events.js pour la logique de la modale elle-meme).
  *
  * TM Importer est organise pour accueillir plusieurs sources (Steam,
- * YouTube...) : la logique propre a chaque source vit dans `steam/` et
- * `youtube/`, chargees avant ce fichier par le manifest, pendant que les
+ * YouTube, Letterboxd) : la logique propre a chaque source vit dans son
+ * dossier, chargee avant ce fichier par le manifest, pendant que les
  * fichiers `content/*.js` ne gerent que l'UI generique de la modale.
  */
 (function (global) {
@@ -28,7 +28,21 @@
     importButton.type = 'button';
     importButton.className = 'tm-import-trigger';
     importButton.textContent = 'Importer depuis un compte';
-    importButton.addEventListener('click', () => openModal(fileInput));
+    importButton.addEventListener('click', async () => {
+      importButton.textContent = 'Importer depuis un compte';
+      try {
+        await openModal(fileInput);
+      } catch (error) {
+        console.error('[TM Importer] Ouverture impossible :', error);
+        const overlay = document.getElementById(constants.MODAL_ID);
+        if (overlay) {
+          global.TMContent.showMessage(overlay, error.message || String(error), true);
+          global.TMContent.logError(overlay, 'settings', error.message || String(error));
+        } else {
+          importButton.textContent = `TM Importer : ${error.message || String(error)} (réessayer)`;
+        }
+      }
+    });
 
     uploadWrapper.insertAdjacentElement('afterend', importButton);
   }
